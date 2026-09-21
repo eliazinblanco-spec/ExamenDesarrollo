@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>SAUAP - Iniciar sesión</title>
+    <h:outputStylesheet name="style.css"/></h:head>
+<h:body>
+    <div class="login-page">
+        <h:form>
+            <div class="login-card">
+                <span class="logo-texto">SAUAP</span>
+
+                <div class="campo">
+                    <p:inputText value="#{loginUI.usuario.correo}" placeholder="Correo" required="true" style="width:100%"/>
+                </div>
+                <div class="campo">
+                    <p:password value="#{loginUI.usuario.contrasena}" placeholder="Contraseña" required="true" feedback="false" style="width:100%"/>
+                </div>
+
+                <p:commandButton value="Iniciar sesión" action="#{loginUI.login}" styleClass="btn-login" ajax="false"/>
+
+                <p:messages globalOnly="true" showDetail="true" style="margin-top:10px; display:block;"/>
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>

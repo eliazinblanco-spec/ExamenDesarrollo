@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title><ui:insert name="titulo">SAUAP</ui:insert></title>
+    <h:outputStylesheet name="style.css"/>
+    <h:outputStylesheet library="primeicons" name="primeicons.css"/>
+</h:head>
+<h:body>
+    <div class="layout">
+        <div class="sidebar">
+            <div class="sidebar-logo"><span class="logo-texto">SAUAP</span></div>
+
+            <ul class="sidebar-menu">
+                <li class="#{view.viewId == '/index.xhtml' ? 'activo' : ''}">
+                    <h:outputLink value="index.xhtml"><i class="pi pi-home"/> Inicio</h:outputLink>
+                </li>
+                <li class="#{view.viewId == '/profesor.xhtml' ? 'activo' : ''}">
+                    <h:outputLink value="profesor.xhtml"><i class="pi pi-user"/> Alta de profesores</h:outputLink>
+                </li>
+                <li class="#{view.viewId == '/unidadAprendizaje.xhtml' ? 'activo' : ''}">
+                    <h:outputLink value="unidadAprendizaje.xhtml"><i class="pi pi-book"/> Unidades de aprendizaje</h:outputLink>
+                </li>
+                <li class="#{view.viewId == '/asignacion.xhtml' ? 'activo' : ''}">
+                    <h:outputLink value="asignacion.xhtml"><i class="pi pi-calendar-plus"/> Asignaciones</h:outputLink>
+                </li>
+                <li class="#{view.viewId == '/reporte.xhtml' ? 'activo' : ''}">
+                    <h:outputLink value="reporte.xhtml"><i class="pi pi-file"/> Reporte de asignaciones</h:outputLink>
+                </li>
+            </ul>
+
+            <h:form class="sidebar-footer">
+                <h:commandLink action="#{loginUI.logout}" styleClass="salir">
+                    <i class="pi pi-sign-out"/> Cerrar sesión
+                </h:commandLink>
+            </h:form>
+        </div>
+
+        <div class="contenido">
+            <ui:insert name="contenido">Contenido de la página</ui:insert>
+        </div>
+    </div>
+</h:body>
+</html>
