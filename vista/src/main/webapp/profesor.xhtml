@@ -49,10 +49,18 @@
                 <br/><br/>
 
                 <p:commandButton
-                        value="#{profesorUI.modoEdicion ? 'Guardar cambios' : 'Registrar profesor'}"
+                        value="Registrar profesor"
                         icon="pi pi-check"
-                        action="#{profesorUI.modoEdicion ? profesorUI.actualizarProfesor() : profesorUI.registrarProfesor()}"
-                        update="formProfesor tablaForm mensajes"/>
+                        action="#{profesorUI.registrarProfesor()}"
+                        update="formProfesor tablaForm mensajes"
+                        rendered="#{!profesorUI.modoEdicion}"/>
+
+                <p:commandButton
+                        value="Guardar cambios"
+                        icon="pi pi-check"
+                        action="#{profesorUI.actualizarProfesor()}"
+                        update="formProfesor tablaForm mensajes"
+                        rendered="#{profesorUI.modoEdicion}"/>
 
                 <p:commandButton value="Cancelar" icon="pi pi-times"
                                  action="#{profesorUI.cancelarEdicion()}"
