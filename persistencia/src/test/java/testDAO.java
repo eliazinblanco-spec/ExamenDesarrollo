@@ -1,17 +1,14 @@
-
-import mx.desarrollo.persistence.dao.AlumnoDAO;
+import mx.desarrollo.entity.Profesor;
+import mx.desarrollo.persistence.dao.ProfesorDAO;
 import mx.desarrollo.persistence.persistence.HibernateUtil;
-import mx.desarrollo.entity.Alumno;
 
 public class testDAO {
 
     public static void main(String[] args) {
-        AlumnoDAO alumnoDAO = new AlumnoDAO(HibernateUtil.getEntityManager());
+        ProfesorDAO profesorDAO = new ProfesorDAO(HibernateUtil.getEntityManager());
 
-
-
-        for (Alumno alumno : alumnoDAO.findAll()) {
-            System.out.println(alumno + "|| id [" + alumno.getId()+ "]");
+        for (Profesor profesor : profesorDAO.findAll()) {
+            System.out.println(profesor + " || id [" + profesor.getId() + "]");
         }
     }
 }

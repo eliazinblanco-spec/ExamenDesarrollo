@@ -14,7 +14,7 @@ public class Usuario {
 
     @Size(max = 45)
     @NotNull
-    @Column(name = "correo", nullable = false, length = 45)
+    @Column(name = "correo", nullable = false, length = 45, unique = true)
     private String correo;
 
     @Size(max = 45)
@@ -22,41 +22,9 @@ public class Usuario {
     @Column(name = "contrasena", nullable = false, length = 45)
     private String contrasena;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idAlumno", nullable = false)
-    private Alumno idAlumno;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
-    public Alumno getIdAlumno() {
-        return idAlumno;
-    }
-
-    public void setIdAlumno(Alumno idAlumno) {
-        this.idAlumno = idAlumno;
-    }
-
+    public Integer getId() { return id; }
+    public String getCorreo() { return correo; }
+    public void setCorreo(String correo) { this.correo = correo; }
+    public String getContrasena() { return contrasena; }
+    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 }
