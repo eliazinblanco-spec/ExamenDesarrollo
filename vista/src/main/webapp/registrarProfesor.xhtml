@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="plantillaSauap.xhtml">
+
+    <ui:define name="titulo">SAUAP – Alta de profesores</ui:define>
+
+    <ui:define name="contenido">
+
+        <h2>Alta de profesores</h2>
+
+        <p:messages id="mensajes" showDetail="false" closable="true"/>
+
+        <h:form id="formProfesor">
+            <p:panel header="#{profesorUI.modoEdicion ? 'Editar profesor' : 'Registrar nuevo profesor'}">
+
+                <p:outputLabel for="nombre" value="Nombre:"/>
+                <p:inputText id="nombre" value="#{profesorUI.nombre}"
+                             placeholder="Ej. María Fernanda" maxlength="50"
+                             required="true" requiredMessage="El nombre es obligatorio."/>
+                <p:message for="nombre"/>
+                <br/><br/>
+
+                <p:outputLabel for="apellidoPaterno" value="Apellido paterno:"/>
+                <p:inputText id="apellidoPaterno" value="#{profesorUI.apellidoPaterno}"
+                             placeholder="Ej. Gómez" maxlength="50"
+                             required="true" requiredMessage="El apellido paterno es obligatorio."/>
+                <p:message for="apellidoPaterno"/>
+                <br/><br/>
+
+                <p:outputLabel for="apellidoMaterno" value="Apellido materno:"/>
+                <p:inputText id="apellidoMaterno" value="#{profesorUI.apellidoMaterno}"
+                             placeholder="Ej. Ruiz" maxlength="50"
+                             required="true" requiredMessage="El apellido materno es obligatorio."/>
+                <p:message for="apellidoMaterno"/>
+                <br/><br/>
+
+                <p:outputLabel for="rfc" value="RFC:"/>
+                <p:inputText id="rfc" value="#{profesorUI.rfc}"
+                             placeholder="Ej. GORM800101AB1" maxlength="13"
+                             required="true" requiredMessage="El RFC es obligatorio."/>
+                <br/>
+                <small>13 caracteres: 4 letras, 6 dígitos (AAMMDD), 3 alfanuméricos.</small>
+                <p:message for="rfc"/>
+                <br/><br/>
+
+                <p:commandButton
+                        value="#{profesorUI.modoEdicion ? 'Guardar cambios' : 'Registrar profesor'}"
+                        icon="pi pi-check"
+                        action="#{profesorUI.modoEdicion ? profesorUI.actualizarProfesor() : profesorUI.registrarProfesor()}"
+                        update="formProfesor tablaForm mensajes"/>
+
+                <p:commandButton value="Cancelar" icon="pi pi-times"
+                                 action="#{profesorUI.cancelarEdicion()}"
+                                 update="formProfesor tablaForm mensajes"
+                                 rendered="#{profesorUI.modoEdicion}"
+                                 immediate="true"/>
+            </p:panel>
+        </h:form>
+
+        <h:form id="tablaForm">
+            <p:panel header="Profesores registrados">
+                <p:dataTable value="#{profesorUI.profesores}" var="prof"
+                             emptyMessage="No hay profesores registrados."
+                             paginator="true" rows="10">
+
+                    <p:column headerText="ID">
+                        <h:outputText value="#{prof.id}"/>
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{prof.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Apellido paterno">
+                        <h:outputText value="#{prof.apellidoPaterno}"/>
+                    </p:column>
+                    <p:column headerText="Apellido materno">
+                        <h:outputText value="#{prof.apellidoMaterno}"/>
+                    </p:column>
+                    <p:column headerText="RFC">
+                        <h:outputText value="#{prof.rfc}"/>
+                    </p:column>
+                    <p:column headerText="Acciones">
+                        <p:commandButton icon="pi pi-pencil" title="Editar"
+                                         action="#{profesorUI.seleccionarParaEditar(prof)}"
+                                         update="formProfesor tablaForm mensajes"/>
+                        <p:commandButton icon="pi pi-trash" title="Eliminar"
+                                         action="#{profesorUI.eliminarProfesor(prof)}"
+                                         update="tablaForm mensajes"
+                                         onclick="return confirm('¿Eliminar al profesor #{prof.nombre}?')"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+</html>
