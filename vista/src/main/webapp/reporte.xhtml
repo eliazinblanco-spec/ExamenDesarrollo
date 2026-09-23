@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="plantillaSauap.xhtml">
+
+    <ui:define name="titulo">SAUAP – Reporte de asignaciones</ui:define>
+
+    <ui:define name="contenido">
+
+        <h:outputStylesheet>
+            .card {
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+                margin-bottom: 24px;
+                overflow: hidden;
+            }
+            .card-header {
+                background: #1565C0;
+                color: #fff;
+                padding: 14px 20px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            .card-body { padding: 24px; }
+            .section-title {
+                font-size: 15px;
+                font-weight: 600;
+                margin-bottom: 16px;
+                color: #222;
+            }
+            .field-row {
+                display: flex;
+                gap: 16px;
+                margin-bottom: 14px;
+                align-items: flex-end;
+            }
+            .field-half {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+            }
+            .field-label {
+                font-size: 13px;
+                color: #444;
+                margin-bottom: 4px;
+            }
+            .input-full {
+                width: 100% !important;
+                border: 1px solid #ccc !important;
+                border-radius: 4px !important;
+                padding: 7px 10px !important;
+                font-size: 13px !important;
+            }
+            .btn-buscar {
+                background: #1565C0 !important;
+                border-color: #1565C0 !important;
+                border-radius: 4px !important;
+                font-size: 13px !important;
+                padding: 7px 16px !important;
+            }
+            .btn-limpiar {
+                background: #757575 !important;
+                border-color: #757575 !important;
+                border-radius: 4px !important;
+                font-size: 13px !important;
+                padding: 7px 16px !important;
+                margin-left: 8px !important;
+            }
+        </h:outputStylesheet>
+
+        <p:messages id="mensajes" showDetail="false" closable="true"/>
+
+        <!-- Filtros -->
+        <div class="card">
+            <div class="card-header">SAUAP – Reporte de asignaciones</div>
+            <div class="card-body">
+                <h:form id="formFiltros">
+                    <div class="section-title">Consultar asignaciones</div>
+
+                    <div class="field-row">
+                        <div class="field-half">
+                            <span class="field-label">Filtrar por ID de profesor:</span>
+                            <p:inputText id="idProfesor"
+                                         value="#{consultasUI.idProfesorFiltro}"
+                                         placeholder="Ej. 1"
+                                         styleClass="input-full"/>
+                        </div>
+                        <div class="field-half">
+                            <span class="field-label">Filtrar por ID de unidad:</span>
+                            <p:inputText id="idUnidad"
+                                         value="#{consultasUI.idUnidadFiltro}"
+                                         placeholder="Ej. 1"
+                                         styleClass="input-full"/>
+                        </div>
+                        <div>
+                            <p:commandButton value="Buscar por profesor"
+                                             action="#{consultasUI.buscarPorProfesor()}"
+                                             update="formFiltros tablaForm mensajes"
+                                             styleClass="btn-buscar"/>
+                            <p:commandButton value="Buscar por unidad"
+                                             action="#{consultasUI.buscarPorUnidad()}"
+                                             update="formFiltros tablaForm mensajes"
+                                             styleClass="btn-buscar"
+                                             style="margin-left:8px"/>
+                            <p:commandButton value="Mostrar todos"
+                                             action="#{consultasUI.limpiarFiltros()}"
+                                             update="formFiltros tablaForm mensajes"
+                                             styleClass="btn-limpiar"/>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+
+        <!-- Tabla -->
+        <div class="card">
+            <div class="card-body">
+                <h:form id="tablaForm">
+                    <div class="section-title">Asignaciones registradas</div>
+
+                    <p:dataTable value="#{consultasUI.asignaciones}"
+                                 var="asig"
+                                 emptyMessage="No hay asignaciones registradas."
+                                 paginator="true"
+                                 rows="10">
+
+                        <p:column headerText="ID">
+                            <h:outputText value="#{asig.id}"/>
+                        </p:column>
+                        <p:column headerText="Profesor">
+                            <h:outputText value="#{asig.profesor.nombre} #{asig.profesor.apellidoPaterno} #{asig.profesor.apellidoMaterno}"/>
+                        </p:column>
+                        <p:column headerText="RFC">
+                            <h:outputText value="#{asig.profesor.rfc}"/>
+                        </p:column>
+                        <p:column headerText="Unidad de aprendizaje">
+                            <h:outputText value="#{asig.unidad.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Hrs clase">
+                            <h:outputText value="#{asig.unidad.horasClase}"/>
+                        </p:column>
+                        <p:column headerText="Hrs taller">
+                            <h:outputText value="#{asig.unidad.horasTaller}"/>
+                        </p:column>
+                        <p:column headerText="Hrs lab.">
+                            <h:outputText value="#{asig.unidad.horasLaboratorio}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

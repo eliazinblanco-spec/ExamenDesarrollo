@@ -1,0 +1,221 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="plantillaSauap.xhtml">
+
+    <ui:define name="titulo">SAUAP – Alta de unidad de aprendizaje</ui:define>
+
+    <ui:define name="contenido">
+
+        <h:outputStylesheet>
+            .card {
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+                margin-bottom: 24px;
+                overflow: hidden;
+            }
+            .card-header {
+                background: #1565C0;
+                color: #fff;
+                padding: 14px 20px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            .card-body { padding: 24px; }
+            .section-title {
+                font-size: 15px;
+                font-weight: 600;
+                margin-bottom: 16px;
+                color: #222;
+            }
+            .field-full {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 14px;
+                width: 100%;
+            }
+            .field-row {
+                display: flex;
+                gap: 16px;
+                margin-bottom: 14px;
+            }
+            .field-half {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+            }
+            .field-label {
+                font-size: 13px;
+                color: #444;
+                margin-bottom: 4px;
+            }
+            .field-hint {
+                font-size: 11px;
+                color: #888;
+                margin-top: 3px;
+            }
+            .input-full {
+                width: 100% !important;
+                border: 1px solid #ccc !important;
+                border-radius: 4px !important;
+                padding: 7px 10px !important;
+                font-size: 13px !important;
+            }
+            .btn-registrar {
+                width: 100% !important;
+                background: #1565C0 !important;
+                border-color: #1565C0 !important;
+                border-radius: 4px !important;
+                font-size: 14px !important;
+                font-weight: 600 !important;
+                padding: 10px !important;
+                margin-top: 8px !important;
+            }
+            .btn-borrar {
+                background: #E53935 !important;
+                border-color: #E53935 !important;
+                border-radius: 4px !important;
+                font-size: 12px !important;
+                padding: 4px 12px !important;
+            }
+            .btn-editar {
+                background: #1565C0 !important;
+                border-color: #1565C0 !important;
+                border-radius: 4px !important;
+                font-size: 12px !important;
+                padding: 4px 12px !important;
+                margin-right: 4px !important;
+            }
+        </h:outputStylesheet>
+
+        <p:messages id="mensajes" showDetail="false" closable="true"/>
+
+        <!-- Formulario -->
+        <div class="card">
+            <div class="card-header">SAUAP – Alta de unidad de aprendizaje</div>
+            <div class="card-body">
+                <h:form id="formUnidad">
+                    <div class="section-title">
+                        #{unidadUI.modoEdicion ? 'Editar unidad de aprendizaje' : 'Registrar nueva unidad de aprendizaje'}
+                    </div>
+
+                    <div class="field-full">
+                        <span class="field-label">Nombre de la unidad:</span>
+                        <p:inputText id="nombre"
+                                     value="#{unidadUI.nombre}"
+                                     placeholder="Ej. Programacion orientada a objetos"
+                                     maxlength="50"
+                                     required="true"
+                                     requiredMessage="El nombre es obligatorio."
+                                     styleClass="input-full"/>
+                        <span class="field-hint">Max. 50 caracteres</span>
+                        <p:message for="nombre"/>
+                    </div>
+
+                    <span class="field-label" style="font-weight:600">Horas semanales:</span>
+                    <div class="field-row" style="margin-top:8px">
+                        <div class="field-half">
+                            <span class="field-label">Horas clase</span>
+                            <p:inputText id="horasClase"
+                                         value="#{unidadUI.horasClase}"
+                                         placeholder="0"
+                                         styleClass="input-full"
+                                         style="text-align:center"/>
+                            <span class="field-hint">Min. 0 - Max. 4</span>
+                            <p:message for="horasClase"/>
+                        </div>
+                        <div class="field-half">
+                            <span class="field-label">Horas taller</span>
+                            <p:inputText id="horasTaller"
+                                         value="#{unidadUI.horasTaller}"
+                                         placeholder="0"
+                                         styleClass="input-full"
+                                         style="text-align:center"/>
+                            <span class="field-hint">Min. 0 - Max. 4</span>
+                            <p:message for="horasTaller"/>
+                        </div>
+                        <div class="field-half">
+                            <span class="field-label">Horas laboratorio</span>
+                            <p:inputText id="horasLaboratorio"
+                                         value="#{unidadUI.horasLaboratorio}"
+                                         placeholder="0"
+                                         styleClass="input-full"
+                                         style="text-align:center"/>
+                            <span class="field-hint">Min. 0 - Max. 4</span>
+                            <p:message for="horasLaboratorio"/>
+                        </div>
+                    </div>
+
+                    <p:commandButton value="Registrar unidad de aprendizaje"
+                                     action="#{unidadUI.registrarUnidad()}"
+                                     update="formUnidad tablaForm mensajes"
+                                     styleClass="btn-registrar"
+                                     rendered="#{!unidadUI.modoEdicion}"/>
+
+                    <p:commandButton value="Guardar cambios"
+                                     action="#{unidadUI.actualizarUnidad()}"
+                                     update="formUnidad tablaForm mensajes"
+                                     styleClass="btn-registrar"
+                                     rendered="#{unidadUI.modoEdicion}"/>
+
+                    <p:commandButton value="Cancelar"
+                                     action="#{unidadUI.cancelarEdicion()}"
+                                     update="formUnidad tablaForm mensajes"
+                                     rendered="#{unidadUI.modoEdicion}"
+                                     immediate="true"
+                                     style="width:100%;margin-top:8px"/>
+                </h:form>
+            </div>
+        </div>
+
+        <!-- Tabla -->
+        <div class="card">
+            <div class="card-body">
+                <h:form id="tablaForm">
+                    <div class="section-title">Unidades de aprendizaje registradas</div>
+
+                    <p:dataTable value="#{unidadUI.unidades}"
+                                 var="uni"
+                                 emptyMessage="No hay unidades registradas."
+                                 paginator="true"
+                                 rows="10">
+
+                        <p:column headerText="ID">
+                            <h:outputText value="#{uni.id}"/>
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{uni.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Clase">
+                            <h:outputText value="#{uni.horasClase} hrs"/>
+                        </p:column>
+                        <p:column headerText="Taller">
+                            <h:outputText value="#{uni.horasTaller} hrs"/>
+                        </p:column>
+                        <p:column headerText="Lab.">
+                            <h:outputText value="#{uni.horasLaboratorio} hrs"/>
+                        </p:column>
+                        <p:column headerText="Accion">
+                            <p:commandButton value="Editar"
+                                             action="#{unidadUI.seleccionarParaEditar(uni)}"
+                                             update="formUnidad tablaForm mensajes"
+                                             styleClass="btn-editar"/>
+                            <p:commandButton value="Borrar"
+                                             action="#{unidadUI.eliminarUnidad(uni)}"
+                                             update="tablaForm mensajes"
+                                             styleClass="btn-borrar"
+                                             onclick="return confirm('Eliminar esta unidad?')"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>
