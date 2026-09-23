@@ -1,30 +1,25 @@
 package mx.desarrollo.persistence.integration;
 
 import jakarta.persistence.EntityManager;
+import mx.desarrollo.persistence.dao.AsignacionDAO;
 import mx.desarrollo.persistence.dao.ProfesorDAO;
 import mx.desarrollo.persistence.dao.UsuarioDAO;
 import mx.desarrollo.persistence.persistence.HibernateUtil;
 
 public class ServiceLocator {
 
-    private static ProfesorDAO profesorDAO;
-    private static UsuarioDAO usuarioDAO;
-
-    private static EntityManager getEntityManager() {
-        return HibernateUtil.getEntityManager();
-    }
-
     public static ProfesorDAO getInstanceProfesorDAO() {
-        if (profesorDAO == null) {
-            profesorDAO = new ProfesorDAO(getEntityManager());
-        }
-        return profesorDAO;
+        EntityManager em = HibernateUtil.getEntityManager();
+        return new ProfesorDAO(em);
     }
 
     public static UsuarioDAO getInstanceUsuarioDAO() {
-        if (usuarioDAO == null) {
-            usuarioDAO = new UsuarioDAO(getEntityManager());
-        }
-        return usuarioDAO;
+        EntityManager em = HibernateUtil.getEntityManager();
+        return new UsuarioDAO(em);
+    }
+
+    public static AsignacionDAO getInstanceAsignacionDAO() {
+        EntityManager em = HibernateUtil.getEntityManager();
+        return new AsignacionDAO(em);
     }
 }

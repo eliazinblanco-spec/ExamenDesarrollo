@@ -7,102 +7,213 @@
 
 <ui:composition template="plantillaSauap.xhtml">
 
-    <ui:define name="titulo">SAUAP – Alta de profesores</ui:define>
+    <ui:define name="titulo">SAUAP - Alta de profesor</ui:define>
 
     <ui:define name="contenido">
 
-        <h2>Alta de profesores</h2>
+        <h:outputStylesheet>
+            .card {
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+                margin-bottom: 24px;
+                overflow: hidden;
+            }
+            .card-header {
+                background: #1565C0;
+                color: #fff;
+                padding: 14px 20px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            .card-body {
+                padding: 24px;
+            }
+            .section-title {
+                font-size: 15px;
+                font-weight: 600;
+                margin-bottom: 16px;
+                color: #222;
+            }
+            .field-row {
+                display: flex;
+                gap: 16px;
+                margin-bottom: 14px;
+            }
+            .field-full {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 14px;
+                width: 100%;
+            }
+            .field-half {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+            }
+            .field-label {
+                font-size: 13px;
+                color: #444;
+                margin-bottom: 4px;
+            }
+            .field-hint {
+                font-size: 11px;
+                color: #888;
+                margin-top: 3px;
+            }
+            .input-full {
+                width: 100% !important;
+                border: 1px solid #ccc !important;
+                border-radius: 4px !important;
+                padding: 7px 10px !important;
+                font-size: 13px !important;
+            }
+            .btn-registrar {
+                width: 100% !important;
+                background: #1565C0 !important;
+                border-color: #1565C0 !important;
+                border-radius: 4px !important;
+                font-size: 14px !important;
+                font-weight: 600 !important;
+                padding: 10px !important;
+                margin-top: 8px !important;
+            }
+            .btn-borrar {
+                background: #E53935 !important;
+                border-color: #E53935 !important;
+                border-radius: 4px !important;
+                font-size: 12px !important;
+                padding: 4px 12px !important;
+            }
+            .btn-editar {
+                background: #1565C0 !important;
+                border-color: #1565C0 !important;
+                border-radius: 4px !important;
+                font-size: 12px !important;
+                padding: 4px 12px !important;
+                margin-right: 4px !important;
+            }
+        </h:outputStylesheet>
 
         <p:messages id="mensajes" showDetail="false" closable="true"/>
 
-        <h:form id="formProfesor">
-            <p:panel header="#{profesorUI.modoEdicion ? 'Editar profesor' : 'Registrar nuevo profesor'}">
+        <div class="card">
+            <div class="card-header">SAUAP - Alta de profesor</div>
+            <div class="card-body">
+                <h:form id="formProfesor">
 
-                <p:outputLabel for="nombre" value="Nombre:"/>
-                <p:inputText id="nombre" value="#{profesorUI.nombre}"
-                             placeholder="Ej. María Fernanda" maxlength="50"
-                             required="true" requiredMessage="El nombre es obligatorio."/>
-                <p:message for="nombre"/>
-                <br/><br/>
+                    <div class="section-title">
+                        #{profesorUI.modoEdicion ? 'Editar profesor' : 'Registrar nuevo profesor'}
+                    </div>
 
-                <p:outputLabel for="apellidoPaterno" value="Apellido paterno:"/>
-                <p:inputText id="apellidoPaterno" value="#{profesorUI.apellidoPaterno}"
-                             placeholder="Ej. Gómez" maxlength="50"
-                             required="true" requiredMessage="El apellido paterno es obligatorio."/>
-                <p:message for="apellidoPaterno"/>
-                <br/><br/>
+                    <div class="field-full">
+                        <span class="field-label">Nombre:</span>
+                        <p:inputText id="nombre"
+                                     value="#{profesorUI.nombre}"
+                                     placeholder="Ej. Maria Fernanda"
+                                     maxlength="50"
+                                     required="true"
+                                     requiredMessage="El nombre es obligatorio."
+                                     styleClass="input-full"/>
+                        <p:message for="nombre"/>
+                    </div>
 
-                <p:outputLabel for="apellidoMaterno" value="Apellido materno:"/>
-                <p:inputText id="apellidoMaterno" value="#{profesorUI.apellidoMaterno}"
-                             placeholder="Ej. Ruiz" maxlength="50"
-                             required="true" requiredMessage="El apellido materno es obligatorio."/>
-                <p:message for="apellidoMaterno"/>
-                <br/><br/>
+                    <div class="field-row">
+                        <div class="field-half">
+                            <span class="field-label">Apellido paterno:</span>
+                            <p:inputText id="apellidoPaterno"
+                                         value="#{profesorUI.apellidoPaterno}"
+                                         placeholder="Ej. Gomez"
+                                         maxlength="50"
+                                         required="true"
+                                         requiredMessage="El apellido paterno es obligatorio."
+                                         styleClass="input-full"/>
+                            <p:message for="apellidoPaterno"/>
+                        </div>
+                        <div class="field-half">
+                            <span class="field-label">Apellido materno:</span>
+                            <p:inputText id="apellidoMaterno"
+                                         value="#{profesorUI.apellidoMaterno}"
+                                         placeholder="Ej. Ruiz"
+                                         maxlength="50"
+                                         required="true"
+                                         requiredMessage="El apellido materno es obligatorio."
+                                         styleClass="input-full"/>
+                            <p:message for="apellidoMaterno"/>
+                        </div>
+                    </div>
 
-                <p:outputLabel for="rfc" value="RFC:"/>
-                <p:inputText id="rfc" value="#{profesorUI.rfc}"
-                             placeholder="Ej. GORM800101AB1" maxlength="13"
-                             required="true" requiredMessage="El RFC es obligatorio."/>
-                <br/>
-                <small>13 caracteres: 4 letras, 6 dígitos (AAMMDD), 3 alfanuméricos.</small>
-                <p:message for="rfc"/>
-                <br/><br/>
+                    <div class="field-full">
+                        <span class="field-label">RFC:</span>
+                        <p:inputText id="rfc"
+                                     value="#{profesorUI.rfc}"
+                                     placeholder="GORM800101AB1"
+                                     maxlength="13"
+                                     required="true"
+                                     requiredMessage="El RFC es obligatorio."
+                                     styleClass="input-full"/>
+                        <span class="field-hint">13 caracteres: 4 letras, 6 digitos (AAMMDD), 3 alfanumericos.</span>
+                        <p:message for="rfc"/>
+                    </div>
 
-                <p:commandButton
-                        value="Registrar profesor"
-                        icon="pi pi-check"
-                        action="#{profesorUI.registrarProfesor()}"
-                        update="formProfesor tablaForm mensajes"
-                        rendered="#{!profesorUI.modoEdicion}"/>
+                    <p:commandButton value="Registrar profesor"
+                                     action="#{profesorUI.registrarProfesor()}"
+                                     update="formProfesor tablaForm mensajes"
+                                     styleClass="btn-registrar"
+                                     rendered="#{!profesorUI.modoEdicion}"/>
 
-                <p:commandButton
-                        value="Guardar cambios"
-                        icon="pi pi-check"
-                        action="#{profesorUI.actualizarProfesor()}"
-                        update="formProfesor tablaForm mensajes"
-                        rendered="#{profesorUI.modoEdicion}"/>
+                    <p:commandButton value="Guardar cambios"
+                                     action="#{profesorUI.actualizarProfesor()}"
+                                     update="formProfesor tablaForm mensajes"
+                                     styleClass="btn-registrar"
+                                     rendered="#{profesorUI.modoEdicion}"/>
 
-                <p:commandButton value="Cancelar" icon="pi pi-times"
-                                 action="#{profesorUI.cancelarEdicion()}"
-                                 update="formProfesor tablaForm mensajes"
-                                 rendered="#{profesorUI.modoEdicion}"
-                                 immediate="true"/>
-            </p:panel>
-        </h:form>
+                    <p:commandButton value="Cancelar"
+                                     action="#{profesorUI.cancelarEdicion()}"
+                                     update="formProfesor tablaForm mensajes"
+                                     rendered="#{profesorUI.modoEdicion}"
+                                     immediate="true"
+                                     style="width:100%;margin-top:8px"/>
 
-        <h:form id="tablaForm">
-            <p:panel header="Profesores registrados">
-                <p:dataTable value="#{profesorUI.profesores}" var="prof"
-                             emptyMessage="No hay profesores registrados."
-                             paginator="true" rows="10">
+                </h:form>
+            </div>
+        </div>
 
-                    <p:column headerText="ID">
-                        <h:outputText value="#{prof.id}"/>
-                    </p:column>
-                    <p:column headerText="Nombre">
-                        <h:outputText value="#{prof.nombre}"/>
-                    </p:column>
-                    <p:column headerText="Apellido paterno">
-                        <h:outputText value="#{prof.apellidoPaterno}"/>
-                    </p:column>
-                    <p:column headerText="Apellido materno">
-                        <h:outputText value="#{prof.apellidoMaterno}"/>
-                    </p:column>
-                    <p:column headerText="RFC">
-                        <h:outputText value="#{prof.rfc}"/>
-                    </p:column>
-                    <p:column headerText="Acciones">
-                        <p:commandButton icon="pi pi-pencil" title="Editar"
-                                         action="#{profesorUI.seleccionarParaEditar(prof)}"
-                                         update="formProfesor tablaForm mensajes"/>
-                        <p:commandButton icon="pi pi-trash" title="Eliminar"
-                                         action="#{profesorUI.eliminarProfesor(prof)}"
-                                         update="tablaForm mensajes"
-                                         onclick="return confirm('¿Eliminar al profesor #{prof.nombre}?')"/>
-                    </p:column>
-                </p:dataTable>
-            </p:panel>
-        </h:form>
+        <div class="card">
+            <div class="card-body">
+                <h:form id="tablaForm">
+                    <div class="section-title">Profesores registrados</div>
+
+                    <p:dataTable value="#{profesorUI.profesores}"
+                                 var="prof"
+                                 emptyMessage="No hay profesores registrados."
+                                 paginator="true"
+                                 rows="10">
+
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{prof.nombre} #{prof.apellidoPaterno} #{prof.apellidoMaterno}"/>
+                        </p:column>
+
+                        <p:column headerText="RFC">
+                            <h:outputText value="#{prof.rfc}"/>
+                        </p:column>
+
+                        <p:column headerText="Accion">
+                            <p:commandButton value="Editar"
+                                             action="#{profesorUI.seleccionarParaEditar(prof)}"
+                                             update="formProfesor tablaForm mensajes"
+                                             styleClass="btn-editar"/>
+                            <p:commandButton value="Borrar"
+                                             action="#{profesorUI.eliminarProfesor(prof)}"
+                                             update="tablaForm mensajes"
+                                             styleClass="btn-borrar"
+                                             onclick="return confirm('Eliminar al profesor?')"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
 
     </ui:define>
 </ui:composition>
